@@ -21,7 +21,7 @@ power_base_value = 1000; % [MW]
 Ki = [-0.3 -0.2 -0.4];
 
 %% Load Merit Order Lists and sort w/ respect to price
-load('MO_1', 'MO_1'); load('MO_2', 'MO_2'); load('MO_3', 'MO_3');
-MO_1 = sortrows(MO_1, 3);
-MO_2 = sortrows(MO_2, 3);
-MO_3 = sortrows(MO_3, 3);
+% load('MO_1', 'MO_1'); load('MO_2', 'MO_2'); load('MO_3', 'MO_3');
+% MO_1 = sortrows(MO_1, 3);
+% MO_2 = sortrows(MO_2, 3);
+% MO_3 = sortrows(MO_3, 3);
