@@ -1,6 +1,6 @@
-%% Init file for Simulink model FFR_3area_3.slx
-% Demand from PI-controller goes through Control Centre and goes back to
-% generators. Has tie-line ref. 
+%% Init file for Simulink model FFR_3area_4.slx
+% Changed demand. Output from controllers goes straight to generators.
+% Demand is now the actual demand without FFR-A.
 clear all; 
 %% Power system contants
 % Area 1
@@ -17,7 +17,8 @@ T_23 = 0.12;
 T_31 = 0.25;
 T_32 = 0.12;
 
-power_base_value = 1000; % [MW]
+L = 10000; % [MW] Power base value
+K = 0.4 * L; % [MW/Hz] Regulation Strength
 %% Controller tuning
 Ki = [-0.3 -0.2 -0.4];
 
@@ -26,11 +27,12 @@ Ki = [-0.3 -0.2 -0.4];
 % MO_1 = sortrows(MO_1, 3);
 % MO_2 = sortrows(MO_2, 3);
 % MO_3 = sortrows(MO_3, 3);
-MO_up = xlsread('MO_up');
-MO_down = xlsread('MO_down');
+[~, ~, MO_up] = xlsread('MO_up');
+[~,~, MO_down] = xlsread('MO_down');
 MO_up = sortrows(MO_up, 1);
 MO_down = sortrows(MO_down, 1);
 
 PRICE = 1;
 QUANTITY = 2;
 AREA = 3;
+LEFT = 4;
