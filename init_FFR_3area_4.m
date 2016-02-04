@@ -27,8 +27,8 @@ Ki = [-0.3 -0.2 -0.4];
 % MO_1 = sortrows(MO_1, 3);
 % MO_2 = sortrows(MO_2, 3);
 % MO_3 = sortrows(MO_3, 3);
-[~, ~, MO_up] = xlsread('MO_up');
-[~,~, MO_down] = xlsread('MO_down');
+MO_up = xlsread('MO_up');
+MO_down = xlsread('MO_down');
 MO_up = sortrows(MO_up, 1);
 MO_down = sortrows(MO_down, 1);
 
