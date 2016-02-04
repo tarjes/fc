@@ -1,4 +1,7 @@
-function export = meritOrder(demands, MO_up, MO_down)
+function [export, orders] = meritOrder(demands, MO_up, MO_down)
+
+% TODO
+% Legg til output-budliste
 
 % Define variables
 PRICE = 1;
@@ -18,9 +21,11 @@ if demand >= 0
         q = MO_up(i, QUANTITY);
         if demand > q
             prod(MO_up(i,AREA)) = prod(MO_up(i,AREA)) + q;
+	    orders(i) = MO_up(i,:);
             demand = demand - q;
         else
              prod(MO_up(i,AREA)) = prod(MO_up(i,AREA)) + demand;
+	     orders(i) = MO_up(i,:);
              demand = 0;
              break;
         end
@@ -36,10 +41,12 @@ else
         q = MO_down(i, QUANTITY);
         if demand > q
             prod(MO_down(i,AREA)) = prod(MO_down(i,AREA)) - q;
+	    orders(i) = MO_down(i,:);
             demand = demand - q;
         else
              prod(MO_down(i,AREA)) = prod(MO_down(i,AREA)) - demand;
-             demand = 0;
+             orders(i) = MO_down(i,:);
+	     demand = 0;
              break;
         end
     end
