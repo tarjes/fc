@@ -1,6 +1,6 @@
-%% Init file for Simulink model FFR_3area_4.slx
-% Output from controllers goes straight to generators.
-% Demand without FFR-A is estimated and used to 
+%% Init file for Simulink model FFR_3area_5.slx
+% The demand from PI-controllers goes to control centre. Control Centre
+% sets both delta_P_m and delta_tielines
 clear all; 
 %% Power system contants
 % Area 1
@@ -18,10 +18,17 @@ T_31 = 0.25;
 T_32 = 0.12;
 
 L = 1000; % [MW] Power base value
-%% Controller tuning
-Ki = [-0.3 -0.2 -0.4];
+K = 0.4 * L; % [MW/Hz] Regulation Strength
 
-%% Sample time FRR_A
+%% Tie-line capacities
+T_cap = [inf 50 100; 50 inf 10; 100 10 inf];
+
+%% Controller tuning
+%Ki = [-0.3 -0.2 -0.4];
+Kp = [-0.5 -0.5 -0.5];
+Ki = [-0.006 -0.005 -0.004];
+
+%% Sample time FRR-A
 sample_time_frr_a = 10;
 
 %% Load Merit Order Lists and sort w/ respect to price
