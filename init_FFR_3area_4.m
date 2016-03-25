@@ -19,7 +19,7 @@ T_32 = 0.12;
 
 L = 1000; % [MW] Power base value
 %% Controller tuning
-Ki = [-0.3 -0.2 -0.4];
+Ki = [-0.003 -0.002 -0.004];
 
 %% Sample time FRR_A
 sample_time_frr_a = 10;

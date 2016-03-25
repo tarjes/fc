@@ -1,7 +1,4 @@
-function [export, orders] = meritOrder(demands, MO_up, MO_down)
-
-% TODO
-% Legg til output-budliste
+function [export, prod, orders, total_cost] = meritOrder(demands, MO_up, MO_down)
 
 % Define variables
 PRICE = 1;
@@ -13,21 +10,24 @@ prod = zeros(length(demands),1);
 
 % Sum demands
 demand = sum(demands);
+orders = zeros(max(length(MO_up),length(MO_down)),3);
 
 % If frequency is too low
 if demand >= 0
     % Check if MO_up is empty
+    % orders = zeros(length(MO_up),3); % Declare max size of orders output
     for i = 1:length(MO_up)
         q = MO_up(i, QUANTITY);
         if demand > q
             prod(MO_up(i,AREA)) = prod(MO_up(i,AREA)) + q;
-	    orders(i) = MO_up(i,:);
+            orders(i,:) = MO_up(i,:);
             demand = demand - q;
         else
-             prod(MO_up(i,AREA)) = prod(MO_up(i,AREA)) + demand;
-	     orders(i) = MO_up(i,:);
-             demand = 0;
-             break;
+            prod(MO_up(i,AREA)) = prod(MO_up(i,AREA)) + demand;
+            orders(i,:) = MO_up(i,:);
+            orders(i,QUANTITY) = demand;
+            demand = 0;
+            break;
         end
     end
     if demand ~= 0
@@ -41,13 +41,14 @@ else
         q = MO_down(i, QUANTITY);
         if demand > q
             prod(MO_down(i,AREA)) = prod(MO_down(i,AREA)) - q;
-	    orders(i) = MO_down(i,:);
+            orders(i,:) = MO_down(i,:);
             demand = demand - q;
         else
-             prod(MO_down(i,AREA)) = prod(MO_down(i,AREA)) - demand;
-             orders(i) = MO_down(i,:);
-	     demand = 0;
-             break;
+            prod(MO_down(i,AREA)) = prod(MO_down(i,AREA)) - demand;
+            orders(i,:) = MO_down(i,:);
+            orders(i,QUANTITY) = demand;
+            demand = 0;
+            break;
         end
     end
     if demand ~= 0
@@ -55,12 +56,16 @@ else
     end
 end
 
-% Solve bill settle problem
-export = prod - sum(prod)/length(prod);
+% Find flow between areas
+export = prod - demands;
 
+% TESTING simulink-matlab
+y = 0;
+coder.extrinsic('myFunc')
+y = myFunc(42);
 
+% Find total cost
+total_cost = 0;
+for i = 1:length(orders)
+    total_cost = total_cost + orders(i,PRICE) * orders(i,QUANTITY);
 end
-
-
-   
-    
